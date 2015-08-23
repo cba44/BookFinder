@@ -1,5 +1,10 @@
 package com.smartbookfinder.bookfinder;
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +23,12 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
+public class MainActivity extends ActionBarActivity implements LocationListener {
 
-public class MainActivity extends ActionBarActivity {
+    TextView longLatView;
+    LocationManager lm;
+    String provider;
+    Location l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +44,33 @@ public class MainActivity extends ActionBarActivity {
 
         final TextView txtView=(TextView)findViewById(R.id.textView2);
 
+        longLatView=(TextView)findViewById(R.id.textView3);
+
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("Books");
+
+        lm=(LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        Criteria c=new Criteria();
+        provider=lm.getBestProvider(c, false);
+
+
+
+
+        l=lm.getLastKnownLocation(provider);
+        if(l!=null)
+        {
+            //get latitude and longitude of the location
+            double lng=l.getLongitude();
+            double lat=l.getLatitude();
+            //display on text view
+            longLatView.setText(lat + " " + lng);
+        }
+        else
+        {
+            longLatView.setText("No Provider");
+        }
+
+
+
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -85,5 +120,29 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLocationChanged(Location loc) {
+        Double lat = loc.getLatitude();
+        Double lng = loc.getLongitude();
+
+        longLatView.setText(lat + " " + lng);
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
