@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
                             Log.d("score", "Retrieved " + bookList.size() + " items");
                             String str = "Retrieved " + bookList.size() + " items\n";
                             for (int i = 0 ; i < bookList.size() ; i++){
-                                str = str + bookList.get(i).get("BookName") + " - " + bookList.get(i).get("BookShop");
+                                str = str + bookList.get(i).get("BookShop")+ "\n";
 
                                 float longi = Float.parseFloat((String)bookList.get(i).get("Longitude"));
                                 float lati = Float.parseFloat((String)bookList.get(i).get("Latitude"));
@@ -92,7 +92,6 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
                                 targetLocation.setLongitude(longi);
 
                                 float d = l.distanceTo(targetLocation);
-                                str = str + " " + d + "\n";
 
                                 if(d < minDist){
                                     minDist = d;
