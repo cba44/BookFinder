@@ -1,6 +1,6 @@
 package com.smartbookfinder.bookfinder;
 
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
     TextView longLatView;
     LocationManager lm;
     String provider;
-    Location l;
+    public static Location l;
     Double lng,lat;
     float minDist = Float.MAX_VALUE;
     String minBook;
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
 
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("Books");
 
-        lm=(LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        lm=(LocationManager)this.getSystemService(LOCATION_SERVICE);
         Criteria c=new Criteria();
         provider=lm.getBestProvider(c, false);
 
@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
             lng=l.getLongitude();
             lat=l.getLatitude();
             //display on text view
-            //longLatView.setText(lat + " " + lng);
+ //           longLatView.setText(lat + " " + lng);
         }
 
         btn.setOnClickListener(new View.OnClickListener() {
